@@ -1,6 +1,10 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 
+import { getServerSession } from "next-auth";
+import SessionProvider from "@components/SessionProvider";
+import ProtectedRoute from "@middleware/ProtectedRoute";
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -9,9 +13,20 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  const session = getServerSession();
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className} style={{
+          width: '100%',
+            height: '100%',
+            padding: '0',
+            margin: '0',
+
+      }}>
+        <SessionProvider session={session}>
+            {children}
+        </SessionProvider>
+      </body>
     </html>
   )
 }
