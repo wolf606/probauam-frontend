@@ -47,7 +47,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const drawerWidth = 240;
 
-export default function DrawerPro({children, options, avatar, letter}) {
+export default function DrawerPro({children, options}) {
 
   const theme = useTheme();
   const router = useRouter();

@@ -4,6 +4,7 @@ export const sendReqJson = async (url, verb, token, body=undefined) => {
     mode: "cors",
     headers: {
       "Content-Type": "application/json",
+      "Authorization": token !== null ? token : "",
     },
   };
 

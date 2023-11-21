@@ -7,11 +7,13 @@ export default function ProtectedRoute({ children, role }) {
     if (session === null) {
         redirect('/auth/signin');
         return null;
-    } else if (!session.role.includes(role)) {
-        console.debug("User Role: ", session.role);
-        console.debug("Required Role: ", role);
-        redirect('/');
-        return null;
+    } else if (role !== "any") {
+        if (!session.role.includes(role)) {
+            console.log("User Role: ", session.role);
+            console.log("Required Role: ", role);
+            redirect('/');
+            return null;
+        }
     }
     return children;
 }

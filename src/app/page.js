@@ -123,7 +123,7 @@ export default async function Home() {
               marginBottom: '4rem',
             }}
           >
-            <QRCode value="https://probauam.vercel.app/dashboard" 
+            <QRCode value="https://docs.google.com/spreadsheets/d/1A8kKBvcyBxLllYRw_TEbASovhDXBZ4ofwSyyrCVF1MQ/edit?usp=sharing" 
               fgColor="#0069A3"
             />
           </Box>
