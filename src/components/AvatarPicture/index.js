@@ -5,13 +5,10 @@ import Image from 'next/image';
 import {
   sendReqGetPic
 } from "@utils/http";
-import { useSelector } from 'react-redux';
 
-export default function AvatarIcon() {
+export default function AvatarPicture({session}) {
   const [avatar, setAvatar] = useState(null);
   const [letter, setLetter] = useState(null);
-
-  const session = useSelector((state) => state.authReducer.session);
 
   useEffect(() => {
     const load = async () => {
@@ -52,10 +49,9 @@ export default function AvatarIcon() {
         <Image
           src={avatar}
           alt="user avatar"
-          width={40}
-          height={40}
+          width={260}
+          height={260}
           style={{
-            cursor: 'pointer',
             borderRadius: '50%'
           }}
         />

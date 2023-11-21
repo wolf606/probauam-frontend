@@ -1,8 +1,11 @@
-
+"use server";
 import {
-    sendReqGetPic
+    sendReqJson
 } from "@utils/http";
 
-export const getProfilePic = async (url, token) => {
-    return await sendReqGetPic(url, token);
+const BASE_URL = process.env.API_URL;
+
+export const getUser = async (id, token) => {
+    const url = `${BASE_URL}/api/v1/users/${id}`;
+    return await sendReqJson(url, "GET", token);
 }

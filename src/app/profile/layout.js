@@ -1,28 +1,23 @@
 import { Grid } from '@mui/material';
 import ProtectedRoute from '@middleware/ProtectedRoute';
 import DrawerPro from '@components/DrawerPro';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import PeopleIcon from '@mui/icons-material/People';
-import BusinessIcon from '@mui/icons-material/Business';
+
+import HomeMaxOutlined from '@mui/icons-material';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 const drawerOptions = [
     {
         0: {
-            label: 'Dashboard',
-            icon: <DashboardIcon />,
-            path: '/dashboard',
-        },
-        1: {
-            label: 'Users',
-            icon: <PeopleIcon />,
-            path: '/dashboard/users',
+            label: 'Home',
+            icon: <HomeMaxOutlined />,
+            path: '/',
         },
     },
     {
         0: {
-            label: 'Entities',
-            icon: <BusinessIcon />,
-            path: '/dashboard/entities',
+            label: 'Help',
+            icon: <HelpOutlineIcon />,
+            path: '/contact',
         },
     },
 ];
@@ -30,7 +25,7 @@ const drawerOptions = [
 export default async function Layout({ children }) {
 
     return (
-        <ProtectedRoute role='admin'>
+        <ProtectedRoute role='any'>
             <Grid
                 sx={{
                     display: 'flex',
@@ -39,7 +34,7 @@ export default async function Layout({ children }) {
                     width: '100%',
                     height: '100%',
                     margin: '0',
-                    padding: '0'
+                    padding: '2rem'
                 }}
             >
                 <DrawerPro options={drawerOptions} >{children}</DrawerPro>

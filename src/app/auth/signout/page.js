@@ -5,22 +5,26 @@ import {
     Stack,
     Typography
 } from '@mui/material';
-import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { removeSession } from '@store/features/auths-slice';
+import { useDispatch } from "react-redux";
 
 export default function SignOut() {
     const router = useRouter();
+    const dispatch = useDispatch();
 
     return (
         <Box
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                width: '30%',
+                width: '80%',
                 backgroundColor: 'background.paper',
                 justifyContent: 'center',
+                alignItems: 'center',
                 borderRadius: '10px',
-                padding: '20px',
+                padding: '2rem',
+                maxWidth: '500px',
                 boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)',
             }}
         >
@@ -33,8 +37,9 @@ export default function SignOut() {
                 <Typography
                     color="text.primary"
                     variant="h4"
+                    fontWeight={700}
                 >
-                    Sign Out
+                    Cerrar Sesión?
                 </Typography>
             </Stack>
             <Stack
@@ -50,11 +55,20 @@ export default function SignOut() {
                     type="submit"
                     variant="contained"
                     onClick={async () => {
-                        const data = await signOut({ redirect: false });
+                        localStorage.removeItem("token");
+                        dispatch(removeSession());
                         router.push("/");
                     }}
+                    sx={{
+                        mt: 3,
+                        backgroundColor: '#0069A3',
+                        '&:hover': {
+                            backgroundColor: '#0069A3',
+                            opacity: 0.8,
+                        },
+                    }}
                 >
-                    Sign Out
+                    Continuar
                 </Button>
             </Stack>
         </Box>

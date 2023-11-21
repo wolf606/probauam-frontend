@@ -26,3 +26,8 @@ export const forgotPassword = async (email) => {
     const url = `${BASE_URL}/api/v1/auth/reset-password`;
     return await sendReqJson(url, "POST", null, { email });
 }
+
+export const activateAccount = async (uid, token) => {
+    const url = `${BASE_URL}/api/v1/auth/activate/${uid}/${token}`;
+    return await sendReqJson(url, "GET", null);
+}
