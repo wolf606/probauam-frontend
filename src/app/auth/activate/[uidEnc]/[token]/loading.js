@@ -33,7 +33,7 @@ export default function Loading() {
                     variant="h4"
                     fontWeight={700}
                 >
-                    Reset Password
+                    Activar cuenta
                 </Typography>
             </Stack>
             

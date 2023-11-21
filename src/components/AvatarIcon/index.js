@@ -1,40 +1,80 @@
 "use client";
 import {useState, useEffect} from 'react';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Avatar } from '@mui/material';
 import Image from 'next/image';
-import { useSession } from 'next-auth/react';
 import {
   sendReqGetPic
 } from "@utils/http";
+import { useSelector } from 'react-redux';
 
 export default function AvatarIcon() {
-  
-  const { data: session, status } = useSession();
-  const [avatarUrl, setAvatarUrl] = useState(null);
   const [avatar, setAvatar] = useState(null);
+  const [letter, setLetter] = useState(null);
+
+  const session = useSelector((state) => state.authReducer.session);
 
   useEffect(() => {
-    if(session) {
-      setAvatarUrl(session.avatar);
-      if (avatarUrl !== null && avatarUrl !== undefined) {
-        sendReqGetPic(avatarUrl, session.accessToken).then((res) => {
-          const url = URL.createObjectURL(res);
-          setAvatar(url);
-        });
+    
+  }, [session]);
+
+  useEffect(() => {
+    const load = async () => {
+      if (session !== null) {
+        if (session.hasOwnProperty("avatar")) {
+          const avatarUrl = session.avatar;
+          if (avatarUrl !== null) {
+            sendReqGetPic(avatarUrl)
+            .then((res) => {
+              setAvatar(URL.createObjectURL(res));
+            })
+          }
+        }
+  
+        if (session.hasOwnProperty("names")) {
+          setLetter(session.names[0]);
+        }
       }
-    }
-  }, [session, avatarUrl]);
+    };
+    load();
+  }, [session]);
+
+  if (session === null) {
+    <Avatar
+          sx={{
+            width: 40,
+            height: 40,
+            cursor: "pointer",
+          }}
+        >
+    </Avatar>
+  }
 
   return (
-    avatar !== null && avatar !== undefined ? <Image
-      alt={"avatar"}
-      src={avatar}
-      width={40}
-      height={40}
-      style={{
-        borderRadius: "50%",
-        cursor: "pointer",
-      }}
-    /> : <AccountCircle/>
-  );
+    <>
+    {
+      avatar !== null ? (
+        <Image
+          src={avatar}
+          alt="user avatar"
+          width={40}
+          height={40}
+          style={{
+            cursor: 'pointer',
+            borderRadius: '50%'
+          }}
+        />
+      ) : (
+        <Avatar
+          sx={{
+            width: 40,
+            height: 40,
+            cursor: "pointer",
+          }}
+        >
+          {letter}
+        </Avatar>
+      )
+    }
+    </>
+  )
 }

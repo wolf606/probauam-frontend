@@ -76,13 +76,14 @@ export default function ResetPassword() {
             <Box
                 sx={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    width: '30%',
-                    backgroundColor: 'background.paper',
-                    justifyContent: 'center',
-                    borderRadius: '10px',
-                    padding: '20px',
-                    boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)',
+                flexDirection: 'column',
+                width: '80%',
+                backgroundColor: 'background.paper',
+                justifyContent: 'center',
+                borderRadius: '10px',
+                padding: '20px',
+                maxWidth: '500px',
+                boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)',
                 }}
             >
                 {
@@ -94,8 +95,9 @@ export default function ResetPassword() {
                             }}
                         >
                             <Typography
-                                color="text.primary"
-                                variant="h4"
+                                 color="text.primary"
+                                 variant="h4"
+                                 fontWeight={700}
                             >
                                 Success!
                             </Typography>
@@ -128,14 +130,15 @@ export default function ResetPassword() {
                                 <Typography
                                     color="text.primary"
                                     variant="h4"
+                                    fontWeight={700}
                                 >
-                                    Reset Password
+                                    Reestablecer Contraseña
                                 </Typography>
                                 <Typography
                                     color="text.secondary"
                                     variant="subtitle2"
                                 >
-                                    Enter your email address and we will send you a link to reset your password.
+                                    Escriba su correo electrónico y le enviaremos un enlace para restablecer su contraseña.
                                 </Typography>
                             </Stack>
                             <form
@@ -172,11 +175,15 @@ export default function ResetPassword() {
                                 <Button
                                     fullWidth
                                     size="large"
-                                    sx={{ mt: 3, backgroundColor: '#3b5998', color: 'white' }}
+                                    sx={{ mt: 3, backgroundColor: '#0069A3',
+                    '&:hover': {
+                        backgroundColor: '#0069A3',
+                        opacity: 0.8,
+                    }, }}
                                     type="submit"
                                     variant="contained"
                                 >
-                                    Continue
+                                    Continuar
                                 </Button>
                             </form>
                         </Stack>

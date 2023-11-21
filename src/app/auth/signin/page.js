@@ -9,33 +9,85 @@ import {
     Typography
 } from '@mui/material';
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { login } from "@calls/auth";
+import { verifyToken } from '@utils/jwt';
+import { setSession } from "@store/features/auths-slice";
+import { useDispatch } from "react-redux";
 
 export default function SignIn() {
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleSignIn = async (values, helpers) => {
+        helpers.setSubmitting(true);
         try {
-            const result = await signIn('credentials', {
-                redirect: false,
-                email: values.email,
-                password: values.password,
-            });
-            if (result.error === null) {
-                helpers.setStatus({ success: true });
-                helpers.setSubmitting(false);
-                helpers.resetForm();
-                router.push("/");
+            const result = await login(values.email, values.password);
+            console.log("result: ", result);
+            if (result.hasOwnProperty("status")) {
+                if (result.status === "ok") {
+                    const token = result.accessToken;
+                    const decodedToken = verifyToken(token);
+                    if (decodedToken !== null) {
+                        localStorage.setItem("token", token);
+                        dispatch(setSession(
+                            {
+                                ...decodedToken,
+                                token: token,
+                            }
+                        ));
+                        helpers.setStatus({ success: true });
+                        helpers.setSubmitting(false);
+                        helpers.resetForm();
+                        router.push("/");
+                    } else {
+                        helpers.setStatus({ success: false });
+                        helpers.setErrors({ submit: "Token invalido." });
+                        helpers.setSubmitting(false);
+                    }
+                } else if (result.status === "error") {
+                    if (result.hasOwnProperty("message")) {
+                        helpers.setStatus({ success: false });
+                        console.debug("err: ", result);
+                        helpers.setErrors({ submit: "Error del servidor." });
+                        helpers.setSubmitting(false);
+                    } else if (result.hasOwnProperty("errors")) {
+                        if (result.errors.hasOwnProperty("password")) {
+                            helpers.setStatus({ success: false });
+                            helpers.setErrors({ password: "Contraseña invalida." });
+                            helpers.setSubmitting(false);
+                        } else {
+                            helpers.setStatus({ success: false });
+                            helpers.setErrors({ submit: "Error desconocido validaciones." });
+                            helpers.setSubmitting(false);
+                        }
+                    }
+                } else {
+                    console.debug("err: ", result);
+                    helpers.setStatus({ success: false });
+                    helpers.setErrors({ submit: "Error desconocido." });
+                    helpers.setSubmitting(false);
+                }
+            } else if (result.hasOwnProperty("errors")) {
+                    if (result.errors[0].path === "email") {
+                        helpers.setStatus({ success: false });
+                        helpers.setErrors({ email: "El correo no se encuentra registrado." });
+                        helpers.setSubmitting(false);
+                    } else {
+                        helpers.setStatus({ success: false });
+                        helpers.setErrors({ submit: "Error desconocido validaciones." });
+                        helpers.setSubmitting(false);
+                    }
             } else {
+                console.debug("err: ", result);
                 helpers.setStatus({ success: false });
-                helpers.setErrors({ submit: "Contraseña invalida." });
+                helpers.setErrors({ submit: "Error desconocido." });
                 helpers.setSubmitting(false);
             }
         } catch (err) {
             helpers.setStatus({ success: false });
-            console.debug("err: ", err);
-            helpers.setErrors({ submit: err.message });
+            console.log("err: ", err);
+            helpers.setErrors({ submit: "Error al contactar el servidor." });
             helpers.setSubmitting(false);
         }
     }
@@ -69,11 +121,12 @@ export default function SignIn() {
             sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                width: '30%',
+                width: '80%',
                 backgroundColor: 'background.paper',
                 justifyContent: 'center',
                 borderRadius: '10px',
                 padding: '20px',
+                maxWidth: '500px',
                 boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)',
             }}
         >
@@ -86,19 +139,20 @@ export default function SignIn() {
                 <Typography
                     color="text.primary"
                     variant="h4"
+                    fontWeight={700}
                 >
-                    Login
+                    Iniciar Sesión
                 </Typography>
                 <Typography
                     color="text.secondary"
                     variant="body2"
                 >
-                    Don&apos;t have an account?
+                    No tiene una cuenta?
                     &nbsp;
                     <Link
                         href="/"
                     >
-                        Register
+                        Crear usuario
                     </Link>
                 </Typography>
             </Stack>
@@ -144,12 +198,32 @@ export default function SignIn() {
                         {formik.errors.submit}
                     </Typography>
                 )}
+                <Typography
+                    color="text.secondary"
+                    variant="subtitle1"
+                    fontWeight={700}
+                    sx={{
+                        mt: 3,
+                        cursor: 'pointer',
+                        textAlign: 'left'
+                    
+                    }}
+                >
+                    <Link href="/auth/reset-password">
+                    Olvide mi contraseña
+                    </Link>
+                </Typography>
                 <Button
                     fullWidth
                     size="large"
-                    sx={{ mt: 3, backgroundColor: '#3b5998', color: 'white' }}
+                    sx={{ mt: 3, backgroundColor: '#0069A3',
+                    '&:hover': {
+                        backgroundColor: '#0069A3',
+                        opacity: 0.8,
+                    }, }}
                     type="submit"
                     variant="contained"
+                    
                 >
                     Continue
                 </Button>

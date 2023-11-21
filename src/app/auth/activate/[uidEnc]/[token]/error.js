@@ -42,14 +42,14 @@ export default function Error({ error, reset }) {
                     variant="h2"
                     fontWeight={700}
                 >
-                    Sorry, 
+                    Lo siento, 
                 </Typography>
                 <Typography
                     color="textSecondary"
                     variant="subtitle"
                     fontWeight={500}
                 >
-                    The token is invalid or has expired.
+                    No podemos activar su cuenta en este momento.
                 </Typography>
                 <Typography
                     color="textSecondary"
