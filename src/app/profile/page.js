@@ -289,7 +289,7 @@ export default function Profile() {
                                 </ListItem>
                                 <Divider />
                                 <ListItem>
-                                    <ListItemText primary="Created" secondary={Date(user.createdAt).toLocaleString()} />
+                                    <ListItemText primary="Created" secondary={new Date(user.createdAt).toLocaleString('en-US', { timeZone: 'UTC' })} />
                                 </ListItem>
                             </List> 
                         </AccordionDetails>
@@ -332,7 +332,7 @@ export default function Profile() {
                                 <ListItem>
                                     {
                                         user.profile.pro_fecnac ? (
-                                            <ListItemText primary="Birthday" secondary={Date(user.profile.pro_fecnac).toLocaleString()} />
+                                            <ListItemText primary="Birthday" secondary={new Date(user.profile.pro_fecnac).toLocaleDateString('en-US', { timeZone: 'UTC' })} />
                                         ) : (
                                             <ListItemText primary="Birthday" secondary="Not set" />
                                         )

@@ -9,6 +9,11 @@ const pages = [
     role: 'admin'
   },
   {
+    name: 'Admisiones',
+    path: '/admissions',
+    role: 'professional'
+  },
+  {
     name: 'Iniciar Sesion',
     path: '/auth/signin',
     role: 'none'
