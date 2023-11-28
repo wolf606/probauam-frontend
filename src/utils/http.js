@@ -3,10 +3,14 @@ export const sendReqJson = async (url, verb, token, body=undefined) => {
     method: verb,
     mode: "cors",
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": token !== null ? token : "",
+      "Content-Type": "application/json"
     },
+    cache: "no-cache",
   };
+
+  if (token !== null) {
+    options.headers.Authorization = token;
+    }
 
   if (body !== undefined) {
     options.body = JSON.stringify(body);
@@ -22,9 +26,14 @@ export const sendReqGetPic = async (url, token) => {
         mode: "cors",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": token !== null ? token : "",
         },
+        cache: "no-cache",
     };
+
+    
+  if (token !== null) {
+    options.headers.Authorization = token;
+    }
 
     const response = await fetch(url, options);
     return await response.blob();
@@ -38,10 +47,14 @@ export const sendReqFormData = async (url, verb, token, body) => {
         mode: "cors",
         headers: {
             "Accept": "application/json",
-            "Authorization": token !== null ? token : "",
         },
         body: newFormData,
+        cache: "no-cache",
     };
+
+    if (token !== null) {
+        options.headers.Authorization = token;
+        }
 
     const response = await fetch(url, options);
     return await response.json();
