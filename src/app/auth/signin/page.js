@@ -150,7 +150,7 @@ export default function SignIn() {
                     No tiene una cuenta?
                     &nbsp;
                     <Link
-                        href="/"
+                        href="/auth/signup"
                     >
                         Crear usuario
                     </Link>
@@ -170,7 +170,7 @@ export default function SignIn() {
                         error={!!(formik.touched.email && formik.errors.email)}
                         fullWidth
                         helperText={formik.touched.email && formik.errors.email}
-                        label="Email Address"
+                        label="Correo electrónico"
                         name="email"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
@@ -181,7 +181,7 @@ export default function SignIn() {
                         error={!!(formik.touched.password && formik.errors.password)}
                         fullWidth
                         helperText={formik.touched.password && formik.errors.password}
-                        label="Password"
+                        label="Contraseña"
                         name="password"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}

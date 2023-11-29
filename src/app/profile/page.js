@@ -33,6 +33,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 import AvatarPicture from "@components/AvatarPicture";
+import { Yesteryear } from "next/font/google";
 
 const boxStyles = {
     display: 'flex',
@@ -244,7 +245,7 @@ export default function Profile() {
                         variant="h3"
                         fontWeight={700}
                     >
-                        My profile
+                        Mi perfil
                     </Typography>
                     <Accordion
                         expanded={userInfoOpen}
@@ -261,7 +262,7 @@ export default function Profile() {
                                 variant="h5"
                                 fontWeight={700}
                             >
-                                User info
+                                Informacion del usuario
                             </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
@@ -306,11 +307,13 @@ export default function Profile() {
                                 variant="h5"
                                 fontWeight={700}
                             >
-                                Profile
+                                Perfil
                             </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <List
+                            {
+                                user.profile !== null && user.profile !== undefined ? (
+                                    <List
                                 sx={accordioListStyles}
                             >
                                 <ListItem>
@@ -344,6 +347,16 @@ export default function Profile() {
                                 </ListItem>
                                 <Divider />
                             </List>
+                                ) : (
+                                    <Typography
+                                        color="text.secondary"
+                                        variant="subtitle1"
+                                        fontWeight={500}
+                                    >
+                                        Sin datos
+                                    </Typography>
+                                )
+                            }
                         </AccordionDetails>
                     </Accordion>
                     <Accordion>
@@ -362,7 +375,9 @@ export default function Profile() {
                             </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <List
+                            {
+                                user.profile.pro_addres !== null && user.profile.pro_addres !== undefined ? (
+                                    <List
                                 sx={accordioListStyles}
                             >
                                 <ListItem>
@@ -389,6 +404,16 @@ export default function Profile() {
                                     <ListItemText primary="Phone number" secondary={"+" + user.profile.pro_addres.add_telcou + " " + user.profile.pro_addres.add_teleph} />
                                 </ListItem>
                             </List>
+                                ) : (
+                                    <Typography
+                                        color="text.secondary"
+                                        variant="subtitle1"
+                                        fontWeight={500}
+                                    >
+                                        Sin datos
+                                    </Typography>
+                                )
+                            }
                         </AccordionDetails>
                     </Accordion>
                 </Stack>

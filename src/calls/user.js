@@ -50,3 +50,27 @@ export const indexActivities = async (phase, day, token) => {
     const url = `${BASE_URL}/api/v1/activities?phase=${phase}&day=${day}`;
     return await sendReqJson(url, "GET", token);
 }
+
+export const createUser = async (data, token) => {
+    //http://localhost:3900/api/v1/users/
+    const url = `${BASE_URL}/api/v1/users/`;
+    return await sendReqJson(url, "POST", token, data);
+}
+
+export const getActiveUsers = async (token) => {
+    //http://localhost:3900/api/v1/users?active=true
+    const url = `${BASE_URL}/api/v1/users?active=true`;
+    return await sendReqJson(url, "GET", token);
+}
+
+export const getStates = async () => {
+    //http://localhost:3900/api/v1/states
+    const url = `${BASE_URL}/api/v1/states`;
+    return await sendReqJson(url, "GET");
+}
+
+export const getMunicipalities = async (stateCode) => {
+    //http://localhost:3900/api/v1/municipalities?state=6563f662b8a2d12503a5c9eb
+    const url = `${BASE_URL}/api/v1/municipalities?stateCode=${stateCode}`;
+    return await sendReqJson(url, "GET");
+}
