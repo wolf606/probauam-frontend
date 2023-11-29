@@ -38,38 +38,3 @@ export const sendReqGetPic = async (url, token) => {
     const response = await fetch(url, options);
     return await response.blob();
 }
-
-export const sendReqFormData = async (url, verb, token, body) => {
-    const newFormData = objectToFormData(body);
-
-    const options = {
-        method: verb,
-        mode: "cors",
-        headers: {
-            "Accept": "application/json",
-        },
-        body: newFormData,
-        cache: "no-cache",
-    };
-
-    if (token !== null) {
-        options.headers.Authorization = token;
-        }
-
-    const response = await fetch(url, options);
-    return await response.json();
-}
-
-function objectToFormData(obj) {
-    const formData = new FormData();
-
-    for (const key in obj) {
-        if (typeof obj[key] === "object" || Array.isArray(obj[key])) {
-            formData.append(key, JSON.stringify(obj[key]));
-        } else {
-            formData.append(key, obj[key]);
-        }
-    }
-
-    return formData;
-}
