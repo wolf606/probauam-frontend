@@ -24,7 +24,7 @@ const pages = [
     role: 'none'
   },
   {
-    name: 'Contacto',
+    name: 'PQRS',
     path: '/contact',
     role: 'any'
   },

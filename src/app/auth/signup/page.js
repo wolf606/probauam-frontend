@@ -22,6 +22,7 @@ import {
     UploadFile,
 } from '@mui/icons-material';
 import { getApiUrl } from "@config";
+import { Link as MuiLink } from '@mui/material';
 
 const TipoIdentificacion = [
     "Documento Nacional de Identidad",
@@ -487,6 +488,26 @@ export default function SignUp() {
                         Registrarse
                     </Button>
                 </form>
+                <Typography
+                    color="text.secondary"
+                    variant="body1"
+                    sx={{
+                        mt: 3,
+                        textAlign: 'center',
+                        cursor: 'pointer',
+                    }}
+                    fontWeight={700}
+                >
+                    <MuiLink
+                        color="inherit"
+                        underline="always"
+                        target="_blank"
+                        rel="noopener"
+                        href="https://www.autonoma.edu.co/sites/default/files/2022-08/Politica-tratamiento-de-datos-personales.pdf"
+                    >
+                        Política de tratamiento de datos personales
+                    </MuiLink>
+                </Typography>
             </Box>
         );
     }
